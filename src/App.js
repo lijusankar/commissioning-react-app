@@ -64,8 +64,12 @@ function App() {
 }
 
 function parsePayload() {
-  const parsed = queryString.parse(window.location.search);
-  return atob(parsed?.data);
+  if(window.location.search){
+    const parsed = queryString.parse(window.location.search);
+    return atob(parsed?.data);
+  }
+
+  return "N/A";
 }
 
 export default App;
