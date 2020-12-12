@@ -1,23 +1,22 @@
 {
   "files": {
-    "main.css": "/commissioning-react-app/static/css/main.ab7136cd.chunk.css",
-    "main.js": "/commissioning-react-app/static/js/main.8d5a099e.chunk.js",
-    "main.js.map": "/commissioning-react-app/static/js/main.8d5a099e.chunk.js.map",
-    "runtime-main.js": "/commissioning-react-app/static/js/runtime-main.0ef99b8c.js",
-    "runtime-main.js.map": "/commissioning-react-app/static/js/runtime-main.0ef99b8c.js.map",
-    "static/js/2.7839d44f.chunk.js": "/commissioning-react-app/static/js/2.7839d44f.chunk.js",
-    "static/js/2.7839d44f.chunk.js.map": "/commissioning-react-app/static/js/2.7839d44f.chunk.js.map",
-    "static/js/3.979f1ef4.chunk.js": "/commissioning-react-app/static/js/3.979f1ef4.chunk.js",
-    "static/js/3.979f1ef4.chunk.js.map": "/commissioning-react-app/static/js/3.979f1ef4.chunk.js.map",
+    "main.css": "/commissioning-react-app/static/css/main.40321f71.chunk.css",
+    "main.js": "/commissioning-react-app/static/js/main.16a116f6.chunk.js",
+    "main.js.map": "/commissioning-react-app/static/js/main.16a116f6.chunk.js.map",
+    "runtime-main.js": "/commissioning-react-app/static/js/runtime-main.d4e2d5fc.js",
+    "runtime-main.js.map": "/commissioning-react-app/static/js/runtime-main.d4e2d5fc.js.map",
+    "static/js/2.b9c7fe9f.chunk.js": "/commissioning-react-app/static/js/2.b9c7fe9f.chunk.js",
+    "static/js/2.b9c7fe9f.chunk.js.map": "/commissioning-react-app/static/js/2.b9c7fe9f.chunk.js.map",
+    "static/js/3.311fc23e.chunk.js": "/commissioning-react-app/static/js/3.311fc23e.chunk.js",
+    "static/js/3.311fc23e.chunk.js.map": "/commissioning-react-app/static/js/3.311fc23e.chunk.js.map",
     "index.html": "/commissioning-react-app/index.html",
-    "static/css/main.ab7136cd.chunk.css.map": "/commissioning-react-app/static/css/main.ab7136cd.chunk.css.map",
-    "static/js/2.7839d44f.chunk.js.LICENSE.txt": "/commissioning-react-app/static/js/2.7839d44f.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/commissioning-react-app/static/media/logo.6ce24c58.svg"
+    "static/css/main.40321f71.chunk.css.map": "/commissioning-react-app/static/css/main.40321f71.chunk.css.map",
+    "static/js/2.b9c7fe9f.chunk.js.LICENSE.txt": "/commissioning-react-app/static/js/2.b9c7fe9f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0ef99b8c.js",
-    "static/js/2.7839d44f.chunk.js",
-    "static/css/main.ab7136cd.chunk.css",
-    "static/js/main.8d5a099e.chunk.js"
+    "static/js/runtime-main.d4e2d5fc.js",
+    "static/js/2.b9c7fe9f.chunk.js",
+    "static/css/main.40321f71.chunk.css",
+    "static/js/main.16a116f6.chunk.js"
   ]
 }
