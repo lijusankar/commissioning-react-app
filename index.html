@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Commissioning PoC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Commissioning React App (PoC)</h1>
+  <p>This page is served from: <code>https://lijusankar.github.io/commissioning-react-app/</code></p>
+
+  <h2>Mock Device Info</h2>
+  <ul id="device-info"></ul>
+
+  <p style="color: red; margin-top: 2rem;">
+    ⚠️ This is a PoC commissioning app. If this URL is loaded in production, it could lead to security issues.
+  </p>
+
+  <script type="text/javascript">
+    const mockData = {
+      vid: 1,
+      pid: 1,
+      cid: 1,
+      name: "mockName",
+      owner: "mockOwner",
+      description: "mockDescription",
+      sku: "mockSku",
+      firmware_version: "mockFirmware",
+      hardware_version: "mockHardware",
+      tis_or_trp_testing_completed: true,
+    };
+
+    const list = document.getElementById("device-info");
+    Object.entries(mockData).forEach(([key, val]) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${key}</strong>: ${val}`;
+      list.appendChild(li);
+    });
+
+    // Optional PoC hook: log the referrer (to simulate if loaded in WebView)
+    console.log("Referrer:", document.referrer);
+  </script>
+</body>
+</html>
